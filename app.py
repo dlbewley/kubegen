@@ -32,7 +32,8 @@ def generate_kubeconfig():
     data = request.json
     namespace = data.get('namespace')
     sa_name = data.get('serviceAccountName')
-    duration = data.get('tokenDuration', 3600)
+    default_duration = int(os.environ.get('DEFAULT_TOKEN_DURATION', 3600))
+    duration = data.get('tokenDuration', default_duration)
 
     if not all([namespace, sa_name]):
         return jsonify({"error": "namespace and serviceAccountName are required"}), 400
@@ -67,10 +68,16 @@ def generate_kubeconfig():
         )
         token = token_response.status.token
 
-        # Get cluster info
-        cluster_url = os.environ.get('KUBERNETES_PORT_443_TCP_ADDR')
-        if not cluster_url:
-            cluster_url = f"https://{os.environ['KUBERNETES_SERVICE_HOST']}:{os.environ['KUBERNETES_SERVICE_PORT']}"
+        # Get external cluster URL (must be reachable from outside the cluster)
+        external_cluster_url = os.environ.get('EXTERNAL_CLUSTER_URL')
+        if not external_cluster_url:
+            # Fallback to internal URL if external URL not configured
+            cluster_url = os.environ.get('KUBERNETES_PORT_443_TCP_ADDR')
+            if not cluster_url:
+                cluster_url = f"https://{os.environ['KUBERNETES_SERVICE_HOST']}:{os.environ['KUBERNETES_SERVICE_PORT']}"
+        else:
+            # Use external URL but remove the protocol if present
+            cluster_url = external_cluster_url.replace('https://', '').replace('http://', '')
         
         with open('/var/run/secrets/kubernetes.io/serviceaccount/ca.crt', 'r') as f:
             ca_data = f.read()
@@ -80,7 +87,7 @@ def generate_kubeconfig():
         ca_data = base64.b64encode(ca_data.encode('utf-8')).decode('utf-8')
 
         # Get Cluster Name
-        cluster_name = "openshift" # default
+        cluster_name = os.environ.get('CLUSTER_NAME', 'openshift')
 
         # Construct Kubeconfig
         kubeconfig = {

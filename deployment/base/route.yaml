@@ -8,3 +8,6 @@ spec:
     name: kubeconfig-generator
   port:
     targetPort: 8080
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect

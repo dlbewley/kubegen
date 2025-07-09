@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kubegen-config
+  namespace: kubegen
+  labels:
+    app: kubegen
+data:
+  # Cluster configuration
+  CLUSTER_NAME: "openshift"
+  
+  # External cluster URL (must be reachable from outside the cluster)
+  EXTERNAL_CLUSTER_URL: "https://api.hub.lab.bewley.net:6443"
+  
+  # Flask application configuration
+  FLASK_ENV: "production"
+  FLASK_DEBUG: "false"
+  
+  # Default token duration in seconds
+  DEFAULT_TOKEN_DURATION: "3600"
+  
+  # Logging configuration
+  LOG_LEVEL: "INFO" 
