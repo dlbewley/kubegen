@@ -12,7 +12,7 @@ spec:
       name: kubegen:latest
   source:
     git:
-      uri: https://github.com/dbewley/kubegen.git
+      uri: https://github.com/dlbewley/kubegen.git
       ref: main
     contextDir: .
   strategy:
