@@ -1,0 +1,10 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: kubeconfig-generator
+spec:
+  to:
+    kind: Service
+    name: kubeconfig-generator
+  port:
+    targetPort: 8080

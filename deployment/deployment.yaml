@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubeconfig-generator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kubeconfig-generator
+  template:
+    metadata:
+      labels:
+        app: kubeconfig-generator
+    spec:
+      serviceAccountName: kubeconfig-generator
+      containers:
+      - name: kubeconfig-generator
+        image: image-registry.openshift-image-registry.svc:5000/openshift/kubeconfig-generator:latest
+        ports:
+        - containerPort: 8080

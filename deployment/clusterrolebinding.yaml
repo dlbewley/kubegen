@@ -1,0 +1,12 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: kubeconfig-generator
+subjects:
+- kind: ServiceAccount
+  name: kubeconfig-generator
+  namespace: default # This should be changed to the namespace where the app is deployed
+roleRef:
+  kind: ClusterRole
+  name: kubeconfig-generator
+  apiGroup: rbac.authorization.k8s.io

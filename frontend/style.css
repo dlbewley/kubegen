@@ -1,0 +1,36 @@
+body {
+    font-family: sans-serif;
+    margin: 2em;
+}
+
+.container {
+    max-width: 500px;
+    margin: auto;
+    padding: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 1em;
+}
+
+input, select, button {
+    padding: 0.5em;
+    margin-top: 0.5em;
+}
+
+button {
+    margin-top: 1.5em;
+    cursor: pointer;
+}
+
+#status {
+    margin-top: 1em;
+    font-weight: bold;
+}
