@@ -17,9 +17,14 @@ def serve_index():
 def get_namespaces():
     try:
         api = get_k8s_api()
-        namespaces = [ns.metadata.name for ns in api.list_namespace().items]
+        print("Attempting to list namespaces...")
+        namespaces_response = api.list_namespace()
+        print(f"Found {len(namespaces_response.items)} namespaces")
+        namespaces = [ns.metadata.name for ns in namespaces_response.items]
+        print(f"Namespace names: {namespaces}")
         return jsonify(namespaces)
     except Exception as e:
+        print(f"Error listing namespaces: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/generate-kubeconfig', methods=['POST'])
