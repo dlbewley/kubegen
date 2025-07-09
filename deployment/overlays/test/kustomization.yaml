@@ -4,10 +4,10 @@ kind: Kustomization
 namespace: kubegen
 
 resources:
-    - ../base
+    - ../../base
 
-images:
-  - name: image-registry.openshift-image-registry.svc:5000/openshift/kubeconfig-generator:latest
-    newName: quay.io/dbewley/kubegen
-    newTag: latest
+# images:
+#   - name: image-registry.openshift-image-registry.svc:5000/openshift/kubeconfig-generator:latest
+#     newName: quay.io/dbewley/kubegen
+#     digest: sha256:83108cc29cea8f07a5293131eede35631fc38a1332716c0abae7abc1a5f208d0
 

@@ -1,0 +1,38 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: kubegen
+  namespace: kubegen
+  labels:
+    app: kubegen
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: kubegen:latest
+  source:
+    git:
+      uri: https://github.com/dbewley/kubegen.git
+      ref: main
+    contextDir: .
+  strategy:
+    type: Source
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: python:3.12-ubi9
+        namespace: openshift
+      env:
+        - name: APP_FILE
+          value: "app.py"
+        - name: PYTHONPATH
+          value: "/opt/app-root/src"
+  triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChange:
+        from:
+          kind: ImageStreamTag
+          name: python:3.12-ubi9
+          namespace: openshift
+  runPolicy: Serial 

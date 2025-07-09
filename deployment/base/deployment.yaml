@@ -15,6 +15,6 @@ spec:
       serviceAccountName: kubeconfig-generator
       containers:
       - name: kubeconfig-generator
-        image: image-registry.openshift-image-registry.svc:5000/openshift/kubeconfig-generator:latest
+        image: image-registry.openshift-image-registry.svc:5000/kubegen/kubegen:latest
         ports:
         - containerPort: 8080
