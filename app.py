@@ -1,7 +1,6 @@
 import os
 from flask import Flask, jsonify, request, send_from_directory
 from kubernetes import client, config
-from openshift import client as openshift_client
 import yaml
 
 app = Flask(__name__, static_folder='frontend', static_url_path='')
@@ -51,14 +50,17 @@ def generate_kubeconfig():
             else:
                 raise
 
-        # Generate Token using OpenShift client
-        openshift_api = openshift_client.OapiApi()
-        token_request = openshift_client.V1TokenRequest(
-            spec=openshift_client.V1TokenRequestSpec(
-                expiration_seconds=int(duration)
-            )
-        )
-        token_response = openshift_api.create_namespaced_service_account_token(
+        # Generate Token using standard Kubernetes API
+        token_request = {
+            "apiVersion": "authentication.k8s.io/v1",
+            "kind": "TokenRequest",
+            "spec": {
+                "expirationSeconds": int(duration)
+            }
+        }
+        
+        # Use the Kubernetes API to create the token
+        token_response = api.create_namespaced_service_account_token(
             name=sa_name,
             namespace=namespace,
             body=token_request
