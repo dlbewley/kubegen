@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: kubegen
+
+resources:
+    - ../base
+
+images:
+  - name: image-registry.openshift-image-registry.svc:5000/openshift/kubeconfig-generator:latest
+    newName: quay.io/dbewley/kubegen
+    newTag: latest
+
