@@ -1,6 +1,9 @@
+![Screenshot of Kubegen web interface](img/screenshot.png)
 # Kubegen - OpenShift ServiceAccount Kubeconfig Generator
 
 A web application that enables authenticated OpenShift users to generate and download kubeconfig files for newly created ServiceAccounts. It automates ServiceAccount creation, permission assignment, token generation, and kubeconfig construction within the OpenShift cluster.
+
+See also, blog post: [Generate a Kubeconfig to Enable OpenShift Service Account Authentication](https://guifreelife.com/blog/2025/04/09/Kubeconfig-for-OpenShift-Service-Accounts/)
 
 ## 🎯 Features
 
