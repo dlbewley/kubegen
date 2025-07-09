@@ -6,7 +6,7 @@ metadata:
   labels:
     app: kubegen
 data:
-  # Cluster configuration
+  # Cluster name in the kubeconfig
   CLUSTER_NAME: "openshift"
   
   # External cluster URL (must be reachable from outside the cluster)
