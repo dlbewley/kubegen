@@ -9,3 +9,6 @@ rules:
 - apiGroups: [""]
   resources: ["serviceaccounts/token"]
   verbs: ["create"]
+- apiGroups: ["oauth.openshift.io"]
+  resources: ["oauthaccesstokens"]
+  verbs: ["create"]
